@@ -24,7 +24,7 @@ jobs:
       run: ./gradlew assembleRelease
       
     - name: Build Debug APK
-      run: ./gradlew assembleRelease
+      run: ./gradlew assembleDebug
       
     - name: version
       run: echo "CUR_VERSION=$(grep -o -E 'versionName = \"[[:digit:]\.]+\"' app/build.gradle.kts | grep -o -E '[[:digit:]\.]+')" >> $GITHUB_OUTPUT
