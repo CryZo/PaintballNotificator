@@ -11,16 +11,30 @@ jobs:
     steps:
     - name: checkout code
       uses: actions/checkout@v2
+      
     - name: setup jdk
       uses: actions/setup-java@v1
       with:
         java-version: 17
+        
     - name: Make Gradle executable
       run: chmod +x ./gradlew
+      
     - name: Build Release APK
       run: ./gradlew assembleRelease
-    - name: Releasing using Hub
-      uses: r0user/release-apk@main
+      
+    - name: version
+      run: echo "::set-output name=version::$(grep -o -E 'versionName = \"[[:digit:]\.]+\"' app/build.gradle.kts | grep -o -E '[[:digit:]\.]+')"
+      id: version
+      
+    - name: release
+      uses: actions/create-release@v1
+      id: create_release
+      with:
+        draft: false
+        prerelease: false
+        release_name: ${{ steps.version.outputs.version }}
+        tag_name: ${{ github.ref }}
+        body_path: CHANGELOG.md
       env:
-       GITHUB_TOKEN: ${{ secrets.TOKEN }}
-       APP_FOLDER: app
+        GITHUB_TOKEN: ${{ github.token }}
