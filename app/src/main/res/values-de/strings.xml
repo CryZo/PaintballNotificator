@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Paintball Notificator</string>
+    <string name="add_team">Team hinzufügen</string>
+    <string name="remove_team">Team entfernen</string>
+    <string name="decrease_selected_team">Vorheriges Team auswählen</string>
+    <string name="increase_selected_team">Nächstes Team auswählen</string>
+    <string name="generate_new_match">Neues Match</string>
+    <string name="match_id">Match ID: %1$s</string>
+    <string name="is_ready">Bereit!</string>
+    <string name="ask_ready">Bereit?</string>
+    <string name="welcome">Willkommen!</string>
+    <string name="welcome_paragraph">Möchtest du ein neues Match ausrichten, oder einem bestehenden beitreten?</string>
+    <string name="match_id_input_label">Match ID</string>
+    <string name="join">Beitreten</string>
+    <string name="create_new">Neues Match</string>
+    <string name="the_match_has_started">Es geht los!</string>
+</resources>
