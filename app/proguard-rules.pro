@@ -22,3 +22,35 @@
 
 -keepclassmembernames class io.netty.** { *; }
 -keepclassmembers class org.jctools.** { *; }
+
+-keep class io.netty.** { *; }
+-keep class org.jctools.** { *; }
+-keep class org.conscrypt.** { *; }
+-keep class org.bouncycastle.** { *; }
+-keep class org.openjsse.** { *; }
+-keep class com.aayushatharva.** { *; }
+-keep class com.github.luben.** { *; }
+-keep class com.google.protobuf.** { *; }
+-keep class com.jcraft.** { *; }
+-keep class com.ning.** { *; }
+-keep class net.jpountz.** { *; }
+-keep class org.apache.log4j.** { *; }
+-keep class org.jboss.log4j.** { *; }
+-keep class org.slf4j.** { *; }
+-keep class sun.security.** { *; }
+
+-dontwarn org.conscrypt.**
+-dontwarn org.bouncycastle.**
+-dontwarn org.openjsse.**
+-dontwarn com.aayushatharva.**
+-dontwarn com.github.luben.**
+-dontwarn com.google.protobuf.**
+-dontwarn com.jcraft.**
+-dontwarn com.ning.**
+-dontwarn io.netty.**
+-dontwarn net.jpountz.**
+-dontwarn org.apache.log4j.**
+-dontwarn org.jboss.log4j.**
+-dontwarn org.slf4j.**
+-dontwarn sun.security.**
+-dontwarn reactor.blockhound.integration.BlockHoundIntegration

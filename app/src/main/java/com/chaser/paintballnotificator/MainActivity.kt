@@ -70,6 +70,7 @@ import com.chaser.paintballnotificator.ui.theme.PaintballNotificatorTheme
 import com.hivemq.client.mqtt.MqttClient
 import com.hivemq.client.mqtt.datatypes.MqttQos
 import com.hivemq.client.mqtt.mqtt3.Mqtt3AsyncClient
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -86,7 +87,7 @@ class MainActivity : ComponentActivity() {
   private var alarmJob: Job? = null
 
 
-  @OptIn(ExperimentalMaterial3Api::class)
+  @OptIn(ExperimentalMaterial3Api::class, DelicateCoroutinesApi::class)
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
@@ -119,12 +120,13 @@ class MainActivity : ComponentActivity() {
           v.vibrate(CombinedVibration.createParallel(vibrationEffect!!))
         }
         else {
+          @Suppress("DEPRECATION")
           val v = getSystemService(ComponentActivity.VIBRATOR_SERVICE) as Vibrator
           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             v.vibrate(vibrationEffect!!)
           }
           else {
-            //deprecated in API 26
+            @Suppress("DEPRECATION")
             v.vibrate(3000)
           }
         }
@@ -138,12 +140,9 @@ class MainActivity : ComponentActivity() {
             // Alaaaaarm!
             vibrate()
             val mp = MediaPlayer.create(applicationContext, R.raw.alarm)
-            mp.setOnCompletionListener { mp -> mp.release() }
+            mp.setOnCompletionListener { mpi -> mpi.release() }
             mp.start()
           }
-
-          Log.println(Log.DEBUG, "alarmTriggered", alarmTriggered.value.toString())
-          Log.println(Log.DEBUG, "teamStatus", (!teamStatus.contains(false)).toString())
 
           alarmTriggered.value = !teamStatus.contains(false)
         }
