@@ -35,3 +35,6 @@ jobs:
         tag_name: ${{ steps.version.outputs.CUR_VERSION }}
         files: |
           app/build/outputs/apk/release/app-release-unsigned.apk
+
+permissions:
+  contents: write
