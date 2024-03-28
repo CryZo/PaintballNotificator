@@ -1,5 +1,6 @@
 package com.chaser.paintballnotificator
 
+import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
@@ -35,6 +36,7 @@ import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material.icons.rounded.KeyboardArrowLeft
 import androidx.compose.material.icons.rounded.KeyboardArrowRight
 import androidx.compose.material.icons.rounded.Refresh
+import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
@@ -298,6 +300,11 @@ class MainActivity : ComponentActivity() {
         setGameId(Random.nextInt(100000, 999999).toString())
       }
 
+      fun reconnect() {
+        if (gameId.value != "")
+          setGameId(gameId.value)
+      }
+
 
 
       @Composable
@@ -390,16 +397,32 @@ class MainActivity : ComponentActivity() {
         Row(
           verticalAlignment = Alignment.CenterVertically,
           modifier = modifier
-            .padding(5.dp)
         ) {
           Text(
             text = stringResource(R.string.match_id, gameId.value),
             color = MaterialTheme.colorScheme.onPrimary
           )
           IconButton(onClick = { setRandomGameId() }) {
-            Icon(Icons.Rounded.Refresh,
-              stringResource(R.string.generate_new_match), tint = MaterialTheme.colorScheme.onPrimary)
+            Icon(Icons.Rounded.Refresh, stringResource(R.string.generate_new_match), tint = MaterialTheme.colorScheme.onPrimary)
           }
+        }
+      }
+
+      @Composable
+      fun ShareButton(modifier: Modifier = Modifier) {
+        IconButton(modifier = modifier, onClick = {
+          val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, "paintball://${gameId.value}")
+            putExtra(Intent.EXTRA_TITLE, getString(R.string.paintball_match_no, gameId.value))
+            type = "text/plain"
+          }
+
+          val shareIntent = Intent.createChooser(sendIntent, null)
+          startActivity(shareIntent)
+
+        }) {
+          Icon(Icons.Rounded.Share, stringResource(R.string.share_match_id), tint = MaterialTheme.colorScheme.onPrimary)
         }
       }
 
@@ -506,6 +529,9 @@ class MainActivity : ComponentActivity() {
         catch (_: Exception) {
 
         }
+
+//      Reconnect just in case
+        reconnect()
       }
 
       PaintballNotificatorTheme {
@@ -525,14 +551,19 @@ class MainActivity : ComponentActivity() {
                   TeamSelector()
                 },
                 actions = {
-                  if (connecting.value)
+                  if (connecting.value) {
                     CircularProgressIndicator(
 //                      modifier = Modifier.width(64.dp),
                       color = MaterialTheme.colorScheme.onPrimary,
                       trackColor = MaterialTheme.colorScheme.primary,
                     )
-                  else
-                    GameSelector()
+                  }
+                  else {
+                    Row (verticalAlignment = Alignment.CenterVertically) {
+                      GameSelector()
+                      ShareButton()
+                    }
+                  }
                 }
               )
             },

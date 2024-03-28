@@ -15,4 +15,6 @@
     <string name="join">Beitreten</string>
     <string name="create_new">Neues Match</string>
     <string name="the_match_has_started">Es geht los!</string>
+    <string name="paintball_match_no">Paintball Match %1$s</string>
+    <string name="share_match_id">Match id teilen</string>
 </resources>
