@@ -1,0 +1,3 @@
+v1.0.0:
+ - Material You Design
+ - Dark Mode
