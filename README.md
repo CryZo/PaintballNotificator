@@ -1,6 +1,7 @@
 <div>
 <div align="left">
 <img src="https://github.com/CryZo/PaintballNotificator/actions/workflows/android.yml/badge.svg"/>
+<img src="https://github.com/CryZo/PaintballNotificator/actions/workflows/docs.yml/badge.svg"/>
 </div>
 <div align="right">
 <a href="README.md">English</a> | <a href="README.de.md">Deutsch</a>

@@ -24,3 +24,6 @@ jobs:
           branch: main
           force: true
           message: 'Overwritten by Github Actions'
+
+permissions:
+  contents: write
