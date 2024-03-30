@@ -8,6 +8,7 @@ on:
       - 'app/**/*'
       - 'gradle/**/*'
       - 'build.gradle.kts'
+      - '.github/workflows/android.yml'
 
 jobs:
   Gradle:
