@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'app/**/*'
+      - 'gradle/**/*'
+      - 'build.gradle.kts'
 
 jobs:
   Gradle:
@@ -11,25 +15,25 @@ jobs:
     steps:
     - name: checkout code
       uses: actions/checkout@v2
-      
+
     - name: setup jdk
       uses: actions/setup-java@v1
       with:
         java-version: 17
-        
+
     - name: Make Gradle executable
       run: chmod +x ./gradlew
-      
+
     - name: Build Release APK
       run: ./gradlew assembleRelease
-      
+
     - name: Build Debug APK
       run: ./gradlew assembleDebug
-      
+
     - name: version
       run: echo "CUR_VERSION=$(grep -o -E 'versionName = \"[[:digit:]\.]+\"' app/build.gradle.kts | grep -o -E '[[:digit:]\.]+')" >> $GITHUB_OUTPUT
       id: version
-      
+
     - name: Release
       uses: softprops/action-gh-release@v2
       with:
