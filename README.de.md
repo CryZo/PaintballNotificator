@@ -26,6 +26,6 @@ v1.0.0:
  - Material You Design
  - Dark Mode
 
-v1.1.0
+v1.1.0:
  - Die Match ID kann jetzt auch direkt geteilt werden. Dadurch muss sie nicht mehr abgetippt werden.
 
