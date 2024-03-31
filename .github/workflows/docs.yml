@@ -11,9 +11,13 @@ on:
 
 jobs:
   build:
+    permissions:
+      id-token: write # Enable OIDC
+      contents: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: chainguard-dev/actions/setup-gitsign@main
 
       - name: Generate Readme
         run:  bash ${GITHUB_WORKSPACE}/scripts/generate-readme.sh
@@ -25,6 +29,3 @@ jobs:
           branch: main
           force: true
           message: 'Overwritten by Github Actions'
-
-permissions:
-  contents: write
