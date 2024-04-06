@@ -9,6 +9,9 @@ on:
       - 'gradle/**/*'
       - 'build.gradle.kts'
       - '.github/workflows/android.yml'
+      - 'fastlane/Appfile'
+      - 'fastlane/Fastfile'
+      - 'fastlane/Pluginfile'
 
 jobs:
   Build:
