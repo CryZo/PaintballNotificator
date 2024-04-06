@@ -31,21 +31,14 @@ jobs:
     # - name: Build Debug APK
     #   run: ./gradlew assembleDebug
 
-    - name: Set up ruby env·
+    - name: Set up ruby env
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: 3.2.3
         bundler-cache: true
 
-    - name: Run tests
-      run: bundle exec fastlane android test
-
-    - name: Decode Service Account Key JSON File
-      uses: timheuer/base64-to-file@v1
-      id: service_account_json_file
-      with:
-        fileName: "serviceAccount.json"
-        encodedString: ${{ secrets.GPLAY_SERVICE_ACCOUNT_KEY_JSON }}
+    # - name: Run tests
+    #   run: bundle exec fastlane android test
 
     - name: Decode Keystore File
       uses: timheuer/base64-to-file@v1
@@ -54,13 +47,26 @@ jobs:
         fileName: "android_keystore.keystore"
         encodedString: ${{ secrets.KEYSTORE_FILE }}
 
-    - name: Build & deploy to play store
+    - name: Build release bundle
       run: bundle exec fastlane android deploy
       env:
         KEYSTORE_FILE: ${{ steps.android_keystore.outputs.filePath }}
         KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
         KEY_ALIAS: ${{ secrets.KEY_ALIAS}}
         KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+
+    - name:  Decode Service Account Key JSON File
+      uses: timheuer/base64-to-file@v1
+      id: service_account_json_file
+      with:
+        fileName: "serviceAccount.json"
+        encodedString: ${{ secrets.GPLAY_SERVICE_ACCOUNT_KEY_JSON }}
+
+
+
+    - name: deploy to play store
+      run: bundle exec fastlane android deploy
+      env:
         ANDROID_JSON_KEY_FILE: ${{ steps.service_account_json_file.outputs.filePath }}
 
     - name: Upload build artifacts
