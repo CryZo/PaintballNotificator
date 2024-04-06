@@ -17,33 +17,73 @@ jobs:
     - name: checkout code
       uses: actions/checkout@v2
 
-    - name: setup jdk
-      uses: actions/setup-java@v1
+    # - name: setup jdk
+    #   uses: actions/setup-java@v1
+    #   with:
+    #     java-version: 17
+
+    # - name: Make Gradle executable
+    #   run: chmod +x ./gradlew
+
+    # - name: Build Release APK
+    #   run: ./gradlew assembleRelease
+
+    # - name: Build Debug APK
+    #   run: ./gradlew assembleDebug
+
+    - name: Set up ruby env·
+      uses: ruby/setup-ruby@v1
       with:
-        java-version: 17
+        ruby-version: 2.7.2
+        bundler-cache: true
 
-    - name: Make Gradle executable
-      run: chmod +x ./gradlew
+    - name: Run tests
+      run: bundle exec fastlane android test
 
-    - name: Build Release APK
-      run: ./gradlew assembleRelease
-
-    - name: Build Debug APK
-      run: ./gradlew assembleDebug
-
-    - name: version
-      run: echo "CUR_VERSION=$(grep -o -E 'versionName = \"[[:digit:]\.]+\"' app/build.gradle.kts | grep -o -E '[[:digit:]\.]+')" >> $GITHUB_OUTPUT
-      id: version
-
-    - name: Release
-      uses: softprops/action-gh-release@v2
+    - name: Decode Service Account Key JSON File
+      uses: timheuer/base64-to-file@v1
+      id: service_account_json_file
       with:
-        generate_release_notes: true
-        make_latest: true
-        tag_name: ${{ steps.version.outputs.CUR_VERSION }}
-        files: |
-          app/build/outputs/apk/release/app-release-unsigned.apk
-          app/build/outputs/apk/debug/app-debug.apk
+        fileName: "serviceAccount.json"
+        encodedString: ${{ secrets.GPLAY_SERVICE_ACCOUNT_KEY_JSON }}
+
+    - name: Decode Keystore File
+      uses: timheuer/base64-to-file@v1
+      id: android_keystore
+      with:
+        fileName: "android_keystore.keystore"
+        encodedString: ${{ secrets.KEYSTORE_FILE }}
+
+    - name: Build & deploy to play store
+      run: bundle exec fastlane android deploy
+      env:
+        KEYSTORE_FILE: ${{ steps.android_keystore.outputs.filePath }}
+        KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+        KEY_ALIAS: ${{ secrets.KEY_ALIAS}}
+        KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        ANDROID_JSON_KEY_FILE: ${{ steps.service_account_json_file.outputs.filePath }}
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: assets
+        path: |
+          ${{ github.workspace }}/app/build/outputs/bundle/release
+
+    # - name: version
+    #   run: echo "CUR_VERSION=$(grep -o -E 'versionName = \"[[:digit:]\.]+\"' app/build.gradle.kts | grep -o -E '[[:digit:]\.]+')" >> $GITHUB_OUTPUT
+    #   id: version
+
+    # - name: Release
+    #   uses: softprops/action-gh-release@v2
+    #   with:
+    #     generate_release_notes: true
+    #     make_latest: true
+    #     tag_name: ${{ steps.version.outputs.CUR_VERSION }}
+    #     files: |
+    #       app/release/app-release.aab
+    #       # app/build/outputs/apk/release/app-release-unsigned.apk
+    #       # app/build/outputs/apk/debug/app-debug.apk
 
 permissions:
   contents: write
