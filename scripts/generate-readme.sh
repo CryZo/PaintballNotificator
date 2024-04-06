@@ -67,4 +67,4 @@ function generate_readme {
 }
 
 generate_readme README.md en-US
-generate_readme README.de.md de
+generate_readme README.de.md de-DE
