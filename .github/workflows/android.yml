@@ -58,6 +58,19 @@ jobs:
         KEY_ALIAS: ${{ secrets.KEY_ALIAS}}
         KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: assets
+        path: |
+          ${{ github.workspace }}/app/build/outputs/bundle/release
+
+
+
+
+
+
+
     - name:  Decode Service Account Key JSON File
       uses: timheuer/base64-to-file@v1
       id: service_account_json_file
@@ -65,20 +78,10 @@ jobs:
         fileName: "serviceAccount.json"
         encodedString: ${{ secrets.GPLAY_SERVICE_ACCOUNT_KEY_JSON }}
 
-
-
-
     - name: deploy to play store
       run: bundle exec fastlane android deploy
       env:
         ANDROID_JSON_KEY_FILE: ${{ steps.service_account_json_file.outputs.filePath }}
-
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: assets
-        path: |
-          ${{ github.workspace }}/app/build/outputs/bundle/release
 
     # - name: version
     #   run: echo "CUR_VERSION=$(grep -o -E 'versionName = \"[[:digit:]\.]+\"' app/build.gradle.kts | grep -o -E '[[:digit:]\.]+')" >> $GITHUB_OUTPUT
