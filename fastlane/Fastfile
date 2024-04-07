@@ -66,8 +66,8 @@ platform :android do
     upload_to_play_store(
       track: "internal",
       json_key: ENV["ANDROID_JSON_KEY_FILE"]
-      version_name: l_version_name
-      version_code: l_version_code
+      version_name: #{l_version_name}
+      version_code: #{l_version_code}
     )
   end
 
