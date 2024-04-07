@@ -119,7 +119,7 @@ jobs:
             ${{ github.workspace }}/app/build/outputs/bundle/release
 
       - name: version
-        run: echo "CUR_VERSION=$(grep -o -E 'versionName = \"[[:digit:]\.]+\"' app/build.gradle.kts | grep -o -E '[[:digit:]\.]+')" >> $GITHUB_OUTPUT
+        run: source app/version.properties && echo "CUR_VERSION=$VERSION" >> $GITHUB_OUTPUT
         id: version
 
       - name: Release
