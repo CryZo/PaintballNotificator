@@ -35,3 +35,6 @@ v1.1.3:
 v1.1.4:
  - Disabled landscape mode
 
+v1.2.0:
+ - Header refactored
+
