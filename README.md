@@ -29,6 +29,9 @@ v1.0.0:
 v1.1.3:
  - Minor improvements
 
+v1.1.3:
+ - Disabled landscape mode
+
 v1.1.0:
  - You can share the match id now directly using the build in Android share sheet.
 

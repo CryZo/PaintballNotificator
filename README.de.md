@@ -29,6 +29,9 @@ v1.0.0:
 v1.1.3:
  - Kleinere Verbesserungen
 
+v1.1.3:
+ - Landscape Modus deaktiviert
+
 v1.1.0:
  - Die Match ID kann jetzt auch direkt geteilt werden. Dadurch muss sie nicht mehr abgetippt werden.
 
