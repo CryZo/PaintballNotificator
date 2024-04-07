@@ -62,7 +62,7 @@ jobs:
     - name: Upload build artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: assets
+        name: release-bundle
         path: |
           ${{ github.workspace }}/app/build/outputs/bundle/release
 
@@ -72,17 +72,26 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-    - name: Decode Service Account Key JSON File
-      uses: timheuer/base64-to-file@v1
-      id: service_account_json_file
-      with:
-        fileName: "serviceAccount.json"
-        encodedString: ${{ secrets.GPLAY_SERVICE_ACCOUNT_KEY_JSON }}
+      - name: checkout code
+        uses: actions/checkout@v2
 
-    - name: Deploy to Google Play
-      run: bundle exec fastlane android deploy
-      env:
-        ANDROID_JSON_KEY_FILE: ${{ steps.service_account_json_file.outputs.filePath }}
+      - uses: actions/download-artifact@v2
+        with:
+          name: release-bundle
+          path: |
+            ${{ github.workspace }}/app/build/outputs/bundle/release
+
+      - name: Decode Service Account Key JSON File
+        uses: timheuer/base64-to-file@v1
+        id: service_account_json_file
+        with:
+          fileName: "serviceAccount.json"
+          encodedString: ${{ secrets.GPLAY_SERVICE_ACCOUNT_KEY_JSON }}
+
+      - name: Deploy to Google Play
+        run: bundle exec fastlane android deploy
+        env:
+          ANDROID_JSON_KEY_FILE: ${{ steps.service_account_json_file.outputs.filePath }}
 
 
   release:
@@ -94,15 +103,24 @@ jobs:
       contents: write
 
     steps:
-    - name: version
-      run: echo "CUR_VERSION=$(grep -o -E 'versionName = \"[[:digit:]\.]+\"' app/build.gradle.kts | grep -o -E '[[:digit:]\.]+')" >> $GITHUB_OUTPUT
-      id: version
+      - name: checkout code
+        uses: actions/checkout@v2
 
-    - name: Release
-      uses: softprops/action-gh-release@v2
-      with:
-        generate_release_notes: true
-        make_latest: true
-        tag_name: ${{ steps.version.outputs.CUR_VERSION }}
-        files: |
-          app/build/outputs/apk/release/app-release.aab
+      - uses: actions/download-artifact@v2
+        with:
+          name: release-bundle
+          path: |
+            ${{ github.workspace }}/app/build/outputs/bundle/release
+
+      - name: version
+        run: echo "CUR_VERSION=$(grep -o -E 'versionName = \"[[:digit:]\.]+\"' app/build.gradle.kts | grep -o -E '[[:digit:]\.]+')" >> $GITHUB_OUTPUT
+        id: version
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          make_latest: true
+          tag_name: ${{ steps.version.outputs.CUR_VERSION }}
+          files: |
+            app/build/outputs/apk/release/app-release.aab
