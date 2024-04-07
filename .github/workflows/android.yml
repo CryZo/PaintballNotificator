@@ -59,12 +59,26 @@ jobs:
         KEY_ALIAS: ${{ secrets.KEY_ALIAS}}
         KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
+    - name: Build release apk
+      run: bundle exec fastlane android assemble
+      env:
+        KEYSTORE_FILE: ${{ steps.android_keystore.outputs.filePath }}
+        KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+        KEY_ALIAS: ${{ secrets.KEY_ALIAS}}
+        KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+
     - name: Upload build artifacts
       uses: actions/upload-artifact@v2
       with:
         name: release-bundle
         path: |
           ${{ github.workspace }}/app/build/outputs/bundle/release
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: release-apk
+        path: |
+          ${{ github.workspace }}/app/build/outputs/apk/release
 
 
   google_play:
@@ -118,6 +132,12 @@ jobs:
           path: |
             ${{ github.workspace }}/app/build/outputs/bundle/release
 
+      - uses: actions/download-artifact@v2
+        with:
+          name: release-apk
+          path: |
+            ${{ github.workspace }}/app/build/outputs/apk/release
+
       - name: version
         run: source app/version.properties && echo "CUR_VERSION=$VERSION" >> $GITHUB_OUTPUT
         id: version
@@ -130,3 +150,4 @@ jobs:
           tag_name: ${{ steps.version.outputs.CUR_VERSION }}
           files: |
             app/build/outputs/bundle/release/app-release.aab
+            app/build/outputs/apk/release/app-release.apk

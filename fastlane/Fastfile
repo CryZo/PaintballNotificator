@@ -38,6 +38,22 @@ platform :android do
     )
   end
 
+  desc "Build apk"
+  lane :assemble do
+    # fetch_and_increment_build_number
+
+    gradle(
+      task: "assemble",
+      build_type: "release",
+      properties: {
+        "android.injected.signing.store.file" => ENV["KEYSTORE_FILE"],
+        "android.injected.signing.store.password" => ENV["KEYSTORE_PASSWORD"],
+        "android.injected.signing.key.alias" => ENV["KEY_ALIAS"],
+        "android.injected.signing.key.password" => ENV["KEY_PASSWORD"],
+      }
+    )
+  end
+
   desc "Deploy a new version to Google Play"
   lane :deploy do
     version_name = get_properties_value(
