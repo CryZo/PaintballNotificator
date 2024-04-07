@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'fastlane/**/*'
+      - 'fastlane/metadata/android/**/*'
       - 'scripts/generate-readme.sh'
       - '.github/workflows/docs.yml'
 

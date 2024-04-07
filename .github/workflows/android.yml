@@ -14,7 +14,8 @@ on:
       - 'fastlane/Pluginfile'
 
 jobs:
-  Build:
+  build:
+    name: Release build
     runs-on: ubuntu-latest
     steps:
     - name: checkout code
@@ -66,37 +67,42 @@ jobs:
           ${{ github.workspace }}/app/build/outputs/bundle/release
 
 
-
-
-
-
-
-    - name:  Decode Service Account Key JSON File
+  google_play:
+    name: Deploy to Google Play
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Decode Service Account Key JSON File
       uses: timheuer/base64-to-file@v1
       id: service_account_json_file
       with:
         fileName: "serviceAccount.json"
         encodedString: ${{ secrets.GPLAY_SERVICE_ACCOUNT_KEY_JSON }}
 
-    - name: deploy to play store
+    - name: Deploy to Google Play
       run: bundle exec fastlane android deploy
       env:
         ANDROID_JSON_KEY_FILE: ${{ steps.service_account_json_file.outputs.filePath }}
 
-    # - name: version
-    #   run: echo "CUR_VERSION=$(grep -o -E 'versionName = \"[[:digit:]\.]+\"' app/build.gradle.kts | grep -o -E '[[:digit:]\.]+')" >> $GITHUB_OUTPUT
-    #   id: version
 
-    # - name: Release
-    #   uses: softprops/action-gh-release@v2
-    #   with:
-    #     generate_release_notes: true
-    #     make_latest: true
-    #     tag_name: ${{ steps.version.outputs.CUR_VERSION }}
-    #     files: |
-    #       app/release/app-release.aab
-    #       # app/build/outputs/apk/release/app-release-unsigned.apk
-    #       # app/build/outputs/apk/debug/app-debug.apk
+  release:
+    name: Create a new release
+    needs: build
+    runs-on: ubuntu-latest
 
-permissions:
-  contents: write
+    permissions:
+      contents: write
+
+    steps:
+    - name: version
+      run: echo "CUR_VERSION=$(grep -o -E 'versionName = \"[[:digit:]\.]+\"' app/build.gradle.kts | grep -o -E '[[:digit:]\.]+')" >> $GITHUB_OUTPUT
+      id: version
+
+    - name: Release
+      uses: softprops/action-gh-release@v2
+      with:
+        generate_release_notes: true
+        make_latest: true
+        tag_name: ${{ steps.version.outputs.CUR_VERSION }}
+        files: |
+          app/build/outputs/apk/release/app-release.aab
