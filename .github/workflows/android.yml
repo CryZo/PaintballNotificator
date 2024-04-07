@@ -129,4 +129,4 @@ jobs:
           make_latest: true
           tag_name: ${{ steps.version.outputs.CUR_VERSION }}
           files: |
-            app/build/outputs/apk/release/app-release.aab
+            app/build/outputs/bundle/release/app-release.aab
