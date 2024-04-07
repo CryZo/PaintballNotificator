@@ -64,10 +64,11 @@ platform :android do
     version_code = (major * 10_000) + (minor * 100) + patch
 
     upload_to_play_store(
-      track: "internal",
+      track: "alpha",
       json_key: ENV["ANDROID_JSON_KEY_FILE"],
       version_name: version_name,
-      version_code: version_code
+      version_code: version_code,
+      aab: "./app/build/outputs/bundle/release/app-release.aab"
     )
   end
 
