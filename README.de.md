@@ -22,12 +22,12 @@
 | ![](fastlane/metadata/android/de-DE/images/phoneScreenshots/1.png) | ![](fastlane/metadata/android/de-DE/images/phoneScreenshots/2.png) | ![](fastlane/metadata/android/de-DE/images/phoneScreenshots/3.png) | ![](fastlane/metadata/android/de-DE/images/phoneScreenshots/4.png) | 
 
 ## Changelog
-v1.1.3:
- - Kleinere Verbesserungen
-
 v1.0.0:
  - Material You Design
  - Dark Mode
+
+v1.1.3:
+ - Kleinere Verbesserungen
 
 v1.1.0:
  - Die Match ID kann jetzt auch direkt geteilt werden. Dadurch muss sie nicht mehr abgetippt werden.
