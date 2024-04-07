@@ -40,8 +40,8 @@ platform :android do
 
   desc "Deploy a new version to Google Play"
   lane :deploy do
-    properties = property_file_read(file: "android/version/version.properties")
-    version_name = properties["VERSION"]
+    props = Fastlane::Actions::ReadPropertiesAction.run(path: "../app/version.properties")
+    version_name = props["VERSION"]
     major, minor, patch = version_name.downcase.split('.').map(&:to_i)
     version_code = (major * 10_000) + (minor * 100) + patch
 
