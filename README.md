@@ -26,12 +26,12 @@ v1.0.0:
  - Material You design
  - Dark mode
 
+v1.1.0:
+ - You can share the match id now directly using the build in Android share sheet.
+
 v1.1.3:
  - Minor improvements
 
-v1.1.3:
+v1.1.4:
  - Disabled landscape mode
-
-v1.1.0:
- - You can share the match id now directly using the build in Android share sheet.
 
