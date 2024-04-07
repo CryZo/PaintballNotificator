@@ -81,6 +81,12 @@ jobs:
           path: |
             ${{ github.workspace }}/app/build/outputs/bundle/release
 
+      - name: Set up ruby env
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2.3
+          bundler-cache: true
+
       - name: Decode Service Account Key JSON File
         uses: timheuer/base64-to-file@v1
         id: service_account_json_file
