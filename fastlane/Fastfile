@@ -61,11 +61,12 @@ platform :android do
       path: "./app/version.properties"
     )
     major, minor, patch = version_name.downcase.split('.').map(&:to_i)
-    :version_code = (major * 10_000) + (minor * 100) + patch
+    version_code = (major * 10_000) + (minor * 100) + patch
 
     upload_to_play_store(
       track: "internal",
       json_key: ENV["ANDROID_JSON_KEY_FILE"]
+      version_code: version_code
     )
   end
 
