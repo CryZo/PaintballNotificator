@@ -22,6 +22,9 @@
 | ![](fastlane/metadata/android/en-US/images/phoneScreenshots/1.png) | ![](fastlane/metadata/android/en-US/images/phoneScreenshots/2.png) | ![](fastlane/metadata/android/en-US/images/phoneScreenshots/3.png) | ![](fastlane/metadata/android/en-US/images/phoneScreenshots/4.png) | 
 
 ## Changelog
+v1.1.3:
+ - Minor improvements
+
 v1.0.0:
  - Material You design
  - Dark mode
