@@ -58,7 +58,7 @@ platform :android do
   lane :deploy do
     version_name = get_properties_value(
       key: "VERSION",
-      path: "../app/version.properties"
+      path: "./app/version.properties"
     )
     major, minor, patch = version_name.downcase.split('.').map(&:to_i)
     version_code = (major * 10_000) + (minor * 100) + patch
