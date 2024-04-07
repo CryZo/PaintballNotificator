@@ -39,11 +39,14 @@ import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -400,6 +403,7 @@ class MainActivity : ComponentActivity() {
         ) {
           Text(
             text = stringResource(R.string.match_id, gameId.value),
+            maxLines = 1,
             color = MaterialTheme.colorScheme.onPrimary
           )
           IconButton(onClick = { setRandomGameId() }) {
@@ -542,31 +546,38 @@ class MainActivity : ComponentActivity() {
         ) {
           Scaffold(
             topBar = {
-              TopAppBar(
-                colors = TopAppBarDefaults.topAppBarColors(
-                  containerColor = MaterialTheme.colorScheme.primary,
-                  titleContentColor = MaterialTheme.colorScheme.onPrimary,
-                ),
-                title = {
-                  TeamSelector()
-                },
-                actions = {
-                  if (connecting.value) {
-                    CircularProgressIndicator(
-//                      modifier = Modifier.width(64.dp),
-                      color = MaterialTheme.colorScheme.onPrimary,
-                      trackColor = MaterialTheme.colorScheme.primary,
-                    )
-                  }
-                  else {
-                    Row (verticalAlignment = Alignment.CenterVertically) {
+              if (gameId.value != "") {
+                MediumTopAppBar(
+                  colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary,
+                  ),
+                  title = {
+                    Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+                      TeamSelector()
+                    }
+                  },
+                  navigationIcon = {
+                    if (!connecting.value) {
                       GameSelector()
+                    }
+                  },
+                  actions = {
+                    if (connecting.value) {
+                      if (gameId.value != "") {
+                        CircularProgressIndicator(
+                          color = MaterialTheme.colorScheme.onPrimary,
+                          trackColor = MaterialTheme.colorScheme.primary,
+                        )
+                      }
+                    }
+                    else {
                       ShareButton()
                     }
                   }
-                }
-              )
-            },
+                )
+              }
+            }
           ) { innerPadding ->
             if (gameId.value != "") {
               LazyColumn(
