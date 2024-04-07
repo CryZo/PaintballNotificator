@@ -23,6 +23,7 @@ jobs:
         run:  bash ${GITHUB_WORKSPACE}/scripts/generate-readme.sh
 
       - name: Commit and push changes
+        continue-on-error: true
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
