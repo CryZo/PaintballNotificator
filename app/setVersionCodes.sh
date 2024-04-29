@@ -8,4 +8,4 @@ function getVersionCode {
 }
 
 sed "s|versionsCode = .*|versionCode = $(getVersionCode)|" -i build.gradle.kts
-sed "s|versionsName = .*|versionName = $VERSION|" -i build.gradle.kts
+sed "s|versionsName = .*|versionName = \"$VERSION\"|" -i build.gradle.kts
