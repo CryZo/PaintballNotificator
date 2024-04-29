@@ -25,7 +25,7 @@ jobs:
 
     - name: Set version code
       run: |
-        ${{ github.workspace }}/app/setVersionCode.sh
+        ${{ github.workspace }}/app/setVersionCodes.sh
         EXIT_CODE=$?
         git add -A && git commit 'updated version code' && git push
         exit $EXIT_CODE
