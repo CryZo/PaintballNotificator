@@ -27,6 +27,8 @@ jobs:
       run: |
         ${{ github.workspace }}/app/setVersionCodes.sh
         EXIT_CODE=$?
+        git config user.name github-actions
+        git config user.email github-actions@github.com
         git add -A && git commit -m 'updated version code' && git push
         exit $EXIT_CODE
 

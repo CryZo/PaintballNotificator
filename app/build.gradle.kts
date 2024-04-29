@@ -14,8 +14,8 @@ android {
         applicationId = "com.chaser.paintballnotificator"
         minSdk = 24
         targetSdk = 34
-        versionsCode = 10201
-        versionsName = 1.2.1
+        versionCode = 10201
+        versionName = 1.2.1
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
