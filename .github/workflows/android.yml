@@ -27,7 +27,7 @@ jobs:
       run: |
         ${{ github.workspace }}/app/setVersionCodes.sh
         EXIT_CODE=$?
-        git add -A && git commit 'updated version code' && git push
+        git add -A && git commit -m 'updated version code' && git push
         exit $EXIT_CODE
 
     - name: setup jdk
