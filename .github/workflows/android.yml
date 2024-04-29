@@ -19,7 +19,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.BOT_ACCESS_TOKEN }}
+
+    - name: Set version code
+      run: |
+        app/setVersionCode.sh
+        EXIT_CODE=$?
+        git add -A && git commit 'updated version code' && git push
+        exit $EXIT_CODE
 
     - name: setup jdk
       uses: actions/setup-java@v1

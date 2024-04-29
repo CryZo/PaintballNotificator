@@ -1,18 +1,6 @@
 import java.util.Locale
 import java.util.Properties
 
-fun buildVersionName(): String {
-    val props = Properties()
-    file("version.properties").inputStream().use { props.load(it) }
-    return props.getProperty("VERSION")
-}
-
-val buildVersionCode: Int = run {
-    val versionName = buildVersionName()
-    val (major, minor, patch) = versionName.lowercase(Locale.getDefault()).split('.').map { it.toInt() }
-    (major * 10000) + (minor * 100) + patch
-}
-
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
@@ -26,8 +14,8 @@ android {
         applicationId = "com.chaser.paintballnotificator"
         minSdk = 24
         targetSdk = 34
-        versionCode = buildVersionCode
-        versionName = buildVersionName()
+        versionsCode = 10201
+        versionsName = 1.2.1
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
