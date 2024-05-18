@@ -33,6 +33,9 @@ function generate_readme {
   echo "> $(cat $FASTLANE_PREFIX/full_description.txt)" >> $OUT
   echo '' >> $OUT
 
+  # Download badges
+  echo '[<img src="./assets/fdroid_badge.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/packages/com.chaser.paintballnotificator/)' >> $OUT
+  echo '[<img src="./assets/release_page_badge.png" alt="Get it on release page" height="80">](https://github.com/CryZo/PaintballNotificator/releases/latest)' >> $OUT
 
   echo "## Screenshots" >> $OUT
 

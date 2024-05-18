@@ -16,10 +16,13 @@
 
 > Simple app to let you know when all teams are ready.
 
+[<img src="./assets/fdroid_badge.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/packages/com.chaser.paintballnotificator/)
+[<img src="./assets/release_page_badge.png" alt="Get it on release page" height="80">](https://github.com/CryZo/PaintballNotificator/releases/latest)
+
 ## Screenshots
 |  | | | |
 |-|-|-|-|
-| ![](fastlane/metadata/android/en-US/images/phoneScreenshots/1.png) | ![](fastlane/metadata/android/en-US/images/phoneScreenshots/2.png) | ![](fastlane/metadata/android/en-US/images/phoneScreenshots/3.png) | ![](fastlane/metadata/android/en-US/images/phoneScreenshots/4.png) | 
+| ![](fastlane/metadata/android/en-US/images/phoneScreenshots/1.png) | ![](fastlane/metadata/android/en-US/images/phoneScreenshots/2.png) | ![](fastlane/metadata/android/en-US/images/phoneScreenshots/3.png) | ![](fastlane/metadata/android/en-US/images/phoneScreenshots/4.png) |
 
 ## Changelog
 v1.0.0:
