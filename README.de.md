@@ -16,6 +16,8 @@
 
 > Simple App, um Bescheid zu geben, wenn alle Teams bereit sind.
 
+[<img src="./assets/fdroid_badge.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/packages/com.chaser.paintballnotificator/)
+[<img src="./assets/release_page_badge.png" alt="Get it on release page" height="80">](https://github.com/CryZo/PaintballNotificator/releases/latest)
 ## Screenshots
 |  | | | |
 |-|-|-|-|
