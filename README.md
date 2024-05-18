@@ -21,6 +21,13 @@
 |-|-|-|-|
 | ![](fastlane/metadata/android/en-US/images/phoneScreenshots/1.png) | ![](fastlane/metadata/android/en-US/images/phoneScreenshots/2.png) | ![](fastlane/metadata/android/en-US/images/phoneScreenshots/3.png) | ![](fastlane/metadata/android/en-US/images/phoneScreenshots/4.png) | 
 
+## Download
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
+     alt="Get it on F-Droid"
+     height="80">](https://f-droid.org/packages/com.chaser.paintballnotificator/)
+
+Or download the latest APK from the [Releases Section](https://github.com/CryZo/PaintballNotificator/releases/latest).
+
 ## Changelog
 v1.0.0:
  - Material You design
